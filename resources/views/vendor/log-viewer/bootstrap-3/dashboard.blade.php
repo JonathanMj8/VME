@@ -2,7 +2,6 @@
 
 @section('content')
     <h1 class="page-header">@lang('Dashboard')</h1>
-
     <div class="row">
         <div class="col-md-3">
             <canvas id="stats-doughnut-chart" height="300"></canvas>

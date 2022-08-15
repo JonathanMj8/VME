@@ -1,21 +1,24 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class file extends Model
+
+class File extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','Autor','Titulo','Año','Categoria',
+    protected $fillable = ['id','url','Titulo','Autor','Año','Carrera',
     ];
     protected $table='files';
 
-    public function scopeNombre($query, $id){
-
-        if($id){
-            return $query->where('Categoria','=',"%$id%");
-        }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function carrera()
+    {
+        return $this->hasOne('App\Models\Carreras', 'id_carreras', 'Carrera');
     }
+    
+
 }

@@ -19,6 +19,7 @@
             <div class="card mb-4">
                 <div class="card-header"><i class="fa fa-fw fa-flag"></i> @lang('Levels')</div>
                 <div class="list-group list-group-flush log-menu">
+                    <a href="/home"><button class="btn btn-warning">DASHBOARD</button></a>
                     @foreach($log->menu() as $levelKey => $item)
                         @if ($item['count'] === 0)
                             <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">

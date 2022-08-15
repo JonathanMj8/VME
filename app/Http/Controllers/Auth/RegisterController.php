@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator; 
 
@@ -30,18 +32,17 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
+    
+    public function index()
+    {   
     }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -54,6 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            
         ]);
     }
 
@@ -69,7 +71,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'g-recaptcha-response'=> function ($attribute, $value, $fail){
+            /* 'g-recaptcha-response'=> function ($attribute, $value, $fail){
                 $secretKey = config('services.recaptcha.secret');
                 $response = $value;
                 $userIP = $_SERVER['REMOTE_ADDR'];
@@ -80,8 +82,17 @@ class RegisterController extends Controller
                     Session()->flash('g-recaptcha-response', 'por favor remarca la recaptcha');
                     Session()->flash('alert-class','alert-danger');
                     $fail($attribute.'google reCaptcha failed');
-                }
-            }
+                } */
         ]);
+    }
+    public function rules()
+    {
+        return [
+            'g-recaptcha-response' => 'recaptcha',
+        ];
+    }
+    public function redirectPath()
+    {
+        return '/';
     }
 }
